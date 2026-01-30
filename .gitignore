@@ -1,0 +1,40 @@
+### IntelliJ IDEA ###
+.idea/
+*.iml
+*.iws
+*.ipr
+out/
+.idea_modules/
+
+### Maven / Java build ###
+target/
+*.class
+*.jar
+*.war
+*.ear
+*.log
+
+### Logs ###
+logs/
+*.log
+
+### OS / misc ###
+.DS_Store
+Thumbs.db
+
+### Temporary files ###
+*.tmp
+*.swp
+*.swo
+
+### Environment / secrets ###
+.env
+.env.*
+*.local
+application-local.yml
+application-local.yaml
+
+### H2 database (если вдруг будет file-based) ###
+*.mv.db
+*.trace.db
+*.db

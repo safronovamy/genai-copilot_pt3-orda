@@ -1,0 +1,137 @@
+# Orders Management API
+
+## Project Overview
+
+The Orders Management API is a Spring Boot application designed to manage customer orders.
+It provides RESTful endpoints for creating, retrieving, and filtering orders.
+The application uses an H2 in-memory database to store order data, making it easy to set up and run locally.
+
+## Tech Stack
+
+- Java 17
+- Spring Boot
+- Spring Web (REST)
+- Spring Data JPA
+- JPA Specifications (for filtering)
+- H2 in-memory database
+- Maven
+- Lombok
+- Jackson
+- JUnit 5 + Spring MockMvc
+
+## Running the Application Locally
+
+### Prerequisites
+
+- Java 17
+- Maven 3.8+
+
+### Run the application
+
+1. Navigate to the project directory:
+   ```bash
+   cd orders-management-api
+   ```
+
+2. Build the project:
+   ```bash
+   mvn clean install
+   ```
+
+3. Run the application:
+   ```bash
+   mvn spring-boot:run
+   ```
+
+The application will start on:  
+`http://localhost:8080`
+
+## Database Setup
+
+The application uses an H2 in-memory database for development and testing purposes.
+The database is automatically configured when the application starts.
+
+The `data.sql` file located in the `src/main/resources` directory contains SQL statements
+to seed the database with **50 sample orders** upon application startup.
+
+Each order includes the following fields:
+- `id`
+- `customerName`
+- `amount`
+- `status`
+- `createdAt`
+
+## REST Endpoints
+
+### 1. Create a New Order
+
+- **Endpoint:** `POST /orders`
+- **Description:** Creates a new order.
+
+**Request Body:**
+```json
+{
+  "customerName": "John Doe",
+  "amount": 150.75,
+  "status": "NEW"
+}
+```
+
+**Response:**  
+Returns the created order with a generated `id` and `createdAt` timestamp.
+
+**cURL Example:**
+```bash
+curl -X POST http://localhost:8080/orders \
+  -H "Content-Type: application/json" \
+  -d '{
+    "customerName": "John Doe",
+    "amount": 150.75,
+    "status": "NEW"
+  }'
+```
+
+### 2. Retrieve Orders with Pagination and Filtering
+
+- **Endpoint:** `GET /orders`
+- **Description:** Retrieves a paginated list of orders with optional filtering.
+
+**Query Parameters:**
+- `page` (optional, default: `1`) — page number (**1-based**)
+- `limit` (optional, default: `10`) — items per page
+- `status` (optional): `NEW`, `PAID`, `SHIPPED`, `CANCELLED`
+- `minAmount` (optional)
+- `maxAmount` (optional)
+- `dateFrom` (optional, `YYYY-MM-DD`)
+- `dateTo` (optional, `YYYY-MM-DD`)
+
+**cURL Example:**
+```bash
+curl -X GET "http://localhost:8080/orders?page=1&limit=10&status=PAID&minAmount=50&maxAmount=200&dateFrom=2025-12-01&dateTo=2025-12-31"
+```
+
+## Validation and Error Handling
+
+The API validates incoming requests.
+If validation fails, the API responds with `400 Bad Request`.
+
+**Error response format (`ApiError`):**
+```json
+{
+  "status": 400,
+  "message": "limit must be between 1 and 100"
+}
+```
+
+## Automated Tests
+
+The project includes automated tests using **JUnit 5** and **Spring MockMvc**.
+Tests cover:
+- successful requests
+- validation errors
+- pagination and filtering edge cases
+
+To run tests:
+```bash
+mvn test
+```
