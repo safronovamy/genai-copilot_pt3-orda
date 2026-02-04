@@ -30,7 +30,7 @@ The application uses an H2 in-memory database to store order data, making it eas
 
 1. Navigate to the project directory:
    ```bash
-   cd orders-management-api
+   cd orders-api
    ```
 
 2. Build the project:
@@ -82,7 +82,7 @@ Returns the created order with a generated `id` and `createdAt` timestamp.
 
 **cURL Example:**
 ```bash
-curl -X POST http://localhost:8080/orders \
+curl -X POST "http://localhost:8080/orders" \
   -H "Content-Type: application/json" \
   -d '{
     "customerName": "John Doe",
