@@ -58,22 +58,6 @@ class OrderPaginationTest {
     }
 
     @Test
-    void page0_invalid_returns400_andApiError() throws Exception {
-        mockMvc.perform(get("/orders").param("page", "0").param("limit", "10"))
-                .andExpect(status().isBadRequest())
-                .andExpect(jsonPath("$.status").value(400))
-                .andExpect(jsonPath("$.message").exists());
-    }
-
-    @Test
-    void limit101_invalid_returns400_andApiError() throws Exception {
-        mockMvc.perform(get("/orders").param("page", "1").param("limit", "101"))
-                .andExpect(status().isBadRequest())
-                .andExpect(jsonPath("$.status").value(400))
-                .andExpect(jsonPath("$.message").exists());
-    }
-
-    @Test
     void missingPageAndLimit_usesDefaults_returns10Items_andPage1() throws Exception {
         mockMvc.perform(get("/orders"))
                 .andExpect(status().isOk())

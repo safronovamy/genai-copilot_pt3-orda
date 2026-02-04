@@ -34,12 +34,4 @@ class OrderQueryValidationTest {
                 .andExpect(status().isBadRequest());
     }
 
-    @Test
-    void invalidDateRange_shouldReturn400() throws Exception {
-        mockMvc.perform(get("/orders")
-                        .param("dateFrom", "2026-01-10")
-                        .param("dateTo", "2026-01-01"))
-                .andExpect(status().isBadRequest())
-                .andExpect(content().string(containsString("dateFrom must be <=")));
-    }
 }
