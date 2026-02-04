@@ -84,4 +84,31 @@ class OrderPaginationTest {
                 .andExpect(jsonPath("$.items").isArray())
                 .andExpect(jsonPath("$.items.length()").value(10));
     }
+
+
+    @Test
+    void limit1_minBoundary_page1_returns1Item_andMetadata() throws Exception {
+        mockMvc.perform(get("/orders").param("page", "1").param("limit", "1"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.page").value(1))
+                .andExpect(jsonPath("$.limit").value(1))
+                .andExpect(jsonPath("$.totalItems").value(greaterThanOrEqualTo(50)))
+                // with limit=1 and 50 seeded items, totalPages should be >= 50
+                .andExpect(jsonPath("$.totalPages").value(greaterThanOrEqualTo(50)))
+                .andExpect(jsonPath("$.items").isArray())
+                .andExpect(jsonPath("$.items.length()").value(1));
+    }
+
+
+    @Test
+    void limit100_maxBoundary_page1_returnsNotMoreThan100Items() throws Exception {
+        mockMvc.perform(get("/orders").param("page", "1").param("limit", "100"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.page").value(1))
+                .andExpect(jsonPath("$.limit").value(100))
+                .andExpect(jsonPath("$.totalItems").value(greaterThanOrEqualTo(50)))
+                .andExpect(jsonPath("$.items").isArray())
+                .andExpect(jsonPath("$.items.length()").value(org.hamcrest.Matchers.lessThanOrEqualTo(100)));
+    }
+
 }

@@ -28,13 +28,12 @@ package com.example.orders.controller;
 // - For 400 errors, assert that response JSON contains fields: status and message (ApiError).
 // - Use given/when patterns and Mockito verify() calls.
 
-import com.example.orders.exception.GlobalExceptionHandler;
-import com.example.orders.service.OrderService;
 import com.example.orders.dto.CreateOrderRequest;
 import com.example.orders.dto.OrderResponse;
 import com.example.orders.dto.PagedResponse;
+import com.example.orders.exception.GlobalExceptionHandler;
 import com.example.orders.model.OrderStatus;
-import com.example.orders.exception.BadRequestException;
+import com.example.orders.service.OrderService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
@@ -44,12 +43,11 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.context.annotation.Import;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
-import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
+import static org.mockito.Mockito.verifyNoInteractions;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-import static org.mockito.Mockito.verifyNoInteractions;
 
 
 @WebMvcTest(OrderController.class)
@@ -139,7 +137,7 @@ class OrderControllerTest {
                 .andExpect(status().isBadRequest())
                 .andExpect(jsonPath("$.status").exists())
                 .andExpect(jsonPath("$.message").exists());
-        ;
+
         Mockito.verify(orderService, Mockito.never()).createOrder(org.mockito.ArgumentMatchers.any(CreateOrderRequest.class));
 
     }
@@ -162,7 +160,7 @@ class OrderControllerTest {
                 .andExpect(status().isBadRequest())
                 .andExpect(jsonPath("$.status").exists())
                 .andExpect(jsonPath("$.message").exists());
-        ;
+
         Mockito.verify(orderService, Mockito.never()).createOrder(org.mockito.ArgumentMatchers.any(CreateOrderRequest.class));
 
     }

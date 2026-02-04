@@ -89,6 +89,25 @@ class OrderFilteringTest {
 
     }
 
+
+    @Test
+    void filterByFutureDateRange_returnsEmptyItems_andZeroTotals() throws Exception {
+        mockMvc.perform(get("/orders")
+                        .param("dateFrom", "2099-01-01")
+                        .param("dateTo", "2099-12-31")
+                        .param("page", "1")
+                        .param("limit", "10"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.page").value(1))
+                .andExpect(jsonPath("$.limit").value(10))
+                .andExpect(jsonPath("$.items").isArray())
+                .andExpect(jsonPath("$.items.length()").value(0))
+                .andExpect(jsonPath("$.totalItems").value(0))
+                .andExpect(jsonPath("$.totalPages").value(0));
+    }
+
+
+
     @Test
     void filterByCombined_new_250to500_onlyMatchReturned() throws Exception {
         mockMvc.perform(get("/orders")
