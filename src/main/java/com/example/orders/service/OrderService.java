@@ -1,35 +1,5 @@
 package com.example.orders.service;
 
-// Implement OrderService for Orders API.
-//
-// Responsibilities:
-// 1) createOrder(CreateOrderRequest request) -> OrderResponse
-//    - Map request to Order entity.
-//    - If request.status is null, default to OrderStatus.NEW.
-//    - Save via OrderRepository.
-//    - Return OrderResponse (use a mapper or constructor).
-//
-// 2) getOrders(page, limit, status, minAmount, maxAmount, dateFrom, dateTo) -> PagedResponse<OrderResponse>
-//    Pagination rules (IMPORTANT):
-//    - API page is 1-based (page >= 1). Convert to Spring Pageable 0-based: PageRequest.of(page - 1, limit, Sort.by("createdAt").descending()).
-//    - limit must be between 1 and 100 (inclusive).
-//    - If page < 1 or limit out of range, throw BadRequestException with a clear message.
-//
-//    Filter validation rules:
-//    - If minAmount != null and maxAmount != null and minAmount > maxAmount -> throw BadRequestException.
-//    - If dateFrom != null and dateTo != null and dateFrom is after dateTo -> throw BadRequestException.
-//
-//    Query execution:
-//    - Build Specification<Order> using OrderSpecifications.build(status, minAmount, maxAmount, dateFrom, dateTo).
-//    - Call repository.findAll(spec, pageable).
-//    - Map Page<Order> content to List<OrderResponse>.
-//    - Return PagedResponse with: items, page (1-based), limit, totalItems, totalPages.
-//
-// Additional requirements:
-// - Use constructor injection for dependencies.
-// - Keep business logic in service, controller should be thin.
-// - Use java.math.BigDecimal and java.time.LocalDate for filters; Order.createdAt is Instant.
-// - Add small helper methods if needed for validation and mapping.
 import com.example.orders.model.Order;
 import com.example.orders.model.OrderStatus;
 import com.example.orders.repository.OrderRepository;

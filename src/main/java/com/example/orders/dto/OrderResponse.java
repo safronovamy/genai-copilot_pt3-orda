@@ -1,18 +1,6 @@
 package com.example.orders.dto;
 
-// Create DTO OrderResponse used in API responses.
-// Fields:
-// - id: Long
-// - customerName: String
-// - status: OrderStatus
-// - amount: BigDecimal
-// - createdAt: Instant
-//
-// Requirements:
-// - Provide a static factory method: fromEntity(Order order) -> OrderResponse
-// - Keep it simple and immutable if possible (e.g., Lombok @Builder + @Getter), but consistency matters.
-// - Import com.example.orders.model.Order and OrderStatus.
-// - Package: com.example.orders.dto
+
 import com.example.orders.model.Order;
 import com.example.orders.model.OrderStatus;
 import java.math.BigDecimal;
